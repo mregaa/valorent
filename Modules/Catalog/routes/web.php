@@ -1,8 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Catalog\Http\Controllers\CatalogController;
+use Modules\Catalog\App\Http\Controllers\CatalogController;
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::resource('catalogs', CatalogController::class)->names('catalog');
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::prefix('catalog')->name('catalog.')->group(function () {
+    Route::get('/', [CatalogController::class, 'index'])->name('index');
+    Route::get('/{id}', [CatalogController::class, 'show'])->name('show');
 });
