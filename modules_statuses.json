@@ -1,0 +1,7 @@
+{
+    "Core": true,
+    "Auth": true,
+    "Catalog": true,
+    "Rental": true,
+    "Admin": true
+}
