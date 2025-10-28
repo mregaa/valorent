@@ -1,56 +1,60 @@
 <?php
 
-namespace Modules\Catalog\Http\Controllers;
+namespace Modules\Catalog\App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Modules\Catalog\App\Repositories\UnitRepositoryInterface;
+use Modules\Core\App\Repositories\CategoryRepositoryInterface;
 
 class CatalogController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        return view('catalog::index');
+    protected UnitRepositoryInterface $unitRepository;
+    protected CategoryRepositoryInterface $categoryRepository;
+
+    public function __construct(
+        UnitRepositoryInterface $unitRepository,
+        CategoryRepositoryInterface $categoryRepository
+    ) {
+        $this->unitRepository = $unitRepository;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display catalog page with all available units
      */
-    public function create()
+    public function index(Request $request)
     {
-        return view('catalog::create');
+        $categories = $this->categoryRepository->all();
+        
+        // Get filter parameters
+        $categoryId = $request->get('category');
+        $search = $request->get('search');
+
+        // Get units based on filters
+        if ($search) {
+            $units = $this->unitRepository->searchByName($search);
+        } elseif ($categoryId) {
+            $units = $this->unitRepository->filterByCategory($categoryId);
+        } else {
+            $units = $this->unitRepository->getAvailableUnits();
+        }
+
+        return view('catalog::index', compact('units', 'categories', 'categoryId', 'search'));
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request) {}
-
-    /**
-     * Show the specified resource.
+     * Show unit detail
      */
     public function show($id)
     {
-        return view('catalog::show');
+        $unit = $this->unitRepository->findById($id);
+
+        if (!$unit) {
+            return redirect()->route('catalog.index')
+                ->with('error', 'Unit not found.');
+        }
+
+        return view('catalog::show', compact('unit'));
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($id)
-    {
-        return view('catalog::edit');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, $id) {}
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id) {}
 }
