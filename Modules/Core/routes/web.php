@@ -9,7 +9,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('cores', CoreController::class)->names('core');
     
     // Category Management Routes
-    Route::prefix('admin/categories')->name('admin.categories.')->middleware('can:manage-categories')->group(function () {
+    Route::prefix('admin/categories')->name('admin.categories.')->group(function () {
         Route::get('/', [CategoryController::class, 'index'])->name('index');
         Route::get('/create', [CategoryController::class, 'create'])->name('create');
         Route::post('/', [CategoryController::class, 'store'])->name('store');

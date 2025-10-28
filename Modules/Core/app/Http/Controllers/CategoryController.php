@@ -21,7 +21,7 @@ class CategoryController extends Controller
 
     public function index(): View
     {
-        $categories = $this->categoryRepository->all();
+        $categories = $this->categoryRepository->paginate(10); // 10 items per page
         return view('core::categories.index', compact('categories'));
     }
 

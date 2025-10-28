@@ -2,6 +2,7 @@
 
 namespace Modules\Core\App\Repositories\Eloquent;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Modules\Core\App\Entities\Category;
 use Modules\Core\App\Repositories\CategoryRepositoryInterface;
@@ -11,6 +12,11 @@ class CategoryRepository implements CategoryRepositoryInterface
     public function all(): Collection
     {
         return Category::all();
+    }
+
+    public function paginate(int $perPage = 15): LengthAwarePaginator
+    {
+        return Category::paginate($perPage);
     }
 
     public function findById(int $id): ?Category
