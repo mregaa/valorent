@@ -4,6 +4,7 @@ namespace Modules\Core\App\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\Core\Database\Factories\CategoryFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Category extends Model
@@ -15,6 +16,11 @@ class Category extends Model
         'slug',
         'description',
     ];
+
+    protected static function newFactory(): CategoryFactory
+    {
+        return CategoryFactory::new();
+    }
 
     /**
      * Relationship: Category has many Units (many-to-many)
