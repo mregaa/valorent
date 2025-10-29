@@ -5,7 +5,8 @@ use Modules\Core\Http\Controllers\CoreController;
 use Modules\Core\Http\Controllers\CategoryController;
 use Modules\Core\Http\Controllers\ProfileController;
 
-Route::middleware(['auth', 'verified'])->group(function () {
+// Admin only routes
+Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('cores', CoreController::class)->names('core');
     
     // Category Management Routes
@@ -18,7 +19,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('/{category}', [CategoryController::class, 'update'])->name('update');
         Route::delete('/{category}', [CategoryController::class, 'destroy'])->name('destroy');
     });
-    
+});
+
+// Authenticated user routes (admin & regular users)
+Route::middleware(['auth'])->group(function () {
     // Profile Management Routes
     Route::prefix('profiles')->name('profiles.')->group(function () {
         Route::get('/me', [ProfileController::class, 'show'])->name('show');
