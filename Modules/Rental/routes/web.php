@@ -19,4 +19,7 @@ Route::middleware('auth')->prefix('rental')->name('rental.')->group(function () 
     
     // Show rental detail
     Route::get('/{id}', [RentalController::class, 'show'])->name('show');
+
+    // Return rental
+    Route::post('/return/{id}', [RentalController::class, 'returnRental'])->name('return');
 });

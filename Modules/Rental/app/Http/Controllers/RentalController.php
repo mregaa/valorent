@@ -143,4 +143,44 @@ class RentalController extends Controller
 
         return view('rental::show', compact('rental'));
     }
+
+    public function returnRental($id)
+    {
+        $rental = $this->rentalRepository->findById($id);
+
+        if (!$rental || $rental->status !== 'active') {
+            return redirect()->route('rental.my-rentals')
+                ->with('error', 'Rental not found or already returned.');
+        }
+
+        // Check if user owns this rental
+        if ($rental->user_id !== Auth::id()) {
+            return redirect()->route('rental.my-rentals')
+                ->with('error', 'Unauthorized access.');
+        }
+
+        DB::beginTransaction();
+        try {
+            // Update rental status to returned
+            $this->rentalRepository->update($rental->id, [
+                'status' => 'returned',
+                'return_date' => Carbon::now(),
+            ]);
+
+            // Update unit status to available
+            $this->unitRepository->update($rental->unit_id, [
+                'status' => 'available',
+            ]);
+
+            DB::commit();
+
+            return redirect()->route('rental.my-rentals')
+                ->with('success', 'Rental returned successfully.');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('rental.my-rentals')
+                ->with('error', 'Failed to return rental. Please try again.');
+        }
+    }
 }

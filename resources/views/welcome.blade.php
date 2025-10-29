@@ -9,8 +9,8 @@
         <div class="row align-items-center">
             <!-- Left Column: Text -->
             <div class="col-md-6 hero-text">
-                <h1 class="display-4 fw-bold">Sewa Akun Valorant dengan Mudah</h1>
-                <p class="lead text-muted">
+                <h1 class="display-4 fw-bold text-white">Sewa Akun Valorant dengan Mudah</h1>
+                <p class="lead text-white">
                     Temukan akun Valorant terbaik untuk kebutuhan Anda. Mulai dari akun Sultan dengan skin premium hingga akun Low Rank untuk latihan.
                 </p>
                 <a href="{{ route('catalog.index') }}" class="btn btn-outline-primary btn-lg">
@@ -29,8 +29,8 @@
 <!-- About / Informasi Website -->
 <section class="info text-center">
     <div class="container">
-        <h2 class="mb-4">Tentang Valorent</h2>
-        <p class="lead mx-auto" style="max-width: 700px;">
+        <h2 class="mb-4 text-white">Tentang Valorent</h2>
+        <p class="lead mx-auto text-white" style="max-width: 700px;">
             Valorent adalah platform terpercaya untuk sewa akun Valorant dengan berbagai kategori dan harga yang kompetitif. Kami berkomitmen memberikan pengalaman sewa yang aman, mudah, dan cepat bagi para gamer di seluruh Indonesia.
         </p>
     </div>
@@ -39,28 +39,28 @@
 <!-- Security & Privacy Section -->
 <section class="security text-center">
     <div class="container">
-        <h2 class="mb-5">Jaminan Keamanan & Privasi</h2>
+        <h2 class="mb-5 text-white">Jaminan Keamanan & Privasi</h2>
         <div class="row justify-content-center">
-            <div class="col-md-4 mb-4 feature-card">
+            <div class="col-md-4 mb-4 privacy-card">
                 <div class="feature-icon">
                     <i class="bi bi-shield-lock-fill"></i>
                 </div>
-                <h5>Keamanan Akun Terjamin</h5>
-                <p>Kami menggunakan protokol keamanan terbaru untuk melindungi akun dan data pribadi Anda dari akses tidak sah.</p>
+                <h5 class="text-white">Keamanan Akun Terjamin</h5>
+                <p class="text-white">Kami menggunakan protokol keamanan terbaru untuk melindungi akun dan data pribadi Anda dari akses tidak sah.</p>
             </div>
-            <div class="col-md-4 mb-4 feature-card">
+            <div class="col-md-4 mb-4 privacy-card">
                 <div class="feature-icon">
                     <i class="bi bi-file-lock2-fill"></i>
                 </div>
-                <h5>Privasi Data Pengguna</h5>
-                <p>Data Anda disimpan dengan aman dan tidak akan dibagikan ke pihak ketiga tanpa izin Anda.</p>
+                <h5 class="text-white">Privasi Data Pengguna</h5>
+                <p class="text-white">Data Anda disimpan dengan aman dan tidak akan dibagikan ke pihak ketiga tanpa izin Anda.</p>
             </div>
-            <div class="col-md-4 mb-4 feature-card">
+            <div class="col-md-4 mb-4 privacy-card">
                 <div class="feature-icon">
                     <i class="bi bi-currency-dollar"></i>
                 </div>
-                <h5>Transaksi Aman & Terpercaya</h5>
-                <p>Proses pembayaran kami dilengkapi dengan enkripsi dan metode pembayaran yang terpercaya.</p>
+                <h5 class="text-white">Transaksi Aman & Terpercaya</h5>
+                <p class="text-white">Proses pembayaran kami dilengkapi dengan enkripsi dan metode pembayaran yang terpercaya.</p>
             </div>
         </div>
     </div>
@@ -69,35 +69,35 @@
 <!-- Features / Keunggulan Layanan -->
 <section class="features text-center">
     <div class="container">
-        <h2 class="mb-5">Kenapa Memilih Valorent?</h2>
+        <h2 class="mb-5 text-white">Kenapa Memilih Valorent?</h2>
         <div class="row justify-content-center">
             <div class="col-md-3 mb-4 feature-card">
                 <div class="feature-icon">
                     <i class="bi bi-speedometer2"></i>
                 </div>
-                <h5>Proses Cepat</h5>
-                <p>Sewa akun dengan proses cepat dan mudah tanpa ribet.</p>
+                <h5 class="text-white">Proses Cepat</h5>
+                <p class="text-white">Sewa akun dengan proses cepat dan mudah tanpa ribet.</p>
             </div>
             <div class="col-md-3 mb-4 feature-card">
                 <div class="feature-icon">
                     <i class="bi bi-people-fill"></i>
                 </div>
-                <h5>Support 24/7</h5>
-                <p>Tim support kami siap membantu Anda kapan saja.</p>
+                <h5 class="text-white">Support 24/7</h5>
+                <p class="text-white">Tim support kami siap membantu Anda kapan saja.</p>
             </div>
             <div class="col-md-3 mb-4 feature-card">
                 <div class="feature-icon">
                     <i class="bi bi-award-fill"></i>
                 </div>
-                <h5>Akun Berkualitas</h5>
-                <p>Akun dengan rank dan skin premium yang selalu diperbarui.</p>
+                <h5 class="text-white">Akun Berkualitas</h5>
+                <p class="text-white">Akun dengan rank dan skin premium yang selalu diperbarui.</p>
             </div>
             <div class="col-md-3 mb-4 feature-card">
                 <div class="feature-icon">
                     <i class="bi bi-wallet2"></i>
                 </div>
-                <h5>Harga Kompetitif</h5>
-                <p>Harga sewa yang bersaing dan transparan tanpa biaya tersembunyi.</p>
+                <h5 class="text-white">Harga Kompetitif</h5>
+                <p class="text-white">Harga sewa yang bersaing dan transparan tanpa biaya tersembunyi.</p>
             </div>
         </div>
     </div>
@@ -106,27 +106,34 @@
 <!-- Optional: Testimonial Section -->
 <section class="testimonials text-center">
     <div class="container">
-        <h2 class="mb-5">Apa Kata Mereka?</h2>
+        <h2 class="mb-5 text-white">Apa Kata Mereka?</h2>
         <div class="row justify-content-center">
             <div class="col-md-4">
                 <div class="testimonial-card">
-                    <p>"Valorent memudahkan saya mendapatkan akun Valorant dengan skin keren tanpa harus beli mahal!"</p>
-                    <h6 class="mt-3">- Andi, Gamer</h6>
+                    <p class="text-white">"Valorent memudahkan saya mendapatkan akun Valorant dengan skin keren tanpa harus beli mahal!"</p>
+                    <h6 class="mt-3 text-white">- Andi, Gamer</h6>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="testimonial-card">
-                    <p>"Proses sewa cepat dan supportnya ramah. Saya sangat puas menggunakan Valorent."</p>
-                    <h6 class="mt-3">- Sari, Streamer</h6>
+                    <p class="text-white">"Proses sewa cepat dan supportnya ramah. Saya sangat puas menggunakan Valorent."</p>
+                    <h6 class="mt-3 text-white">- Sari, Streamer</h6>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="testimonial-card">
-                    <p>"Akun yang disewakan selalu update dan aman. Recommended banget buat yang mau coba rank tinggi."</p>
-                    <h6 class="mt-3">- Budi, Pro Player</h6>
+                    <p class="text-white">"Akun yang disewakan selalu update dan aman. Recommended banget buat yang mau coba rank tinggi."</p>
+                    <h6 class="mt-3 text-white">- Budi, Pro Player</h6>
                 </div>
             </div>
         </div>
     </div>
 </section>
 @endsection
+
+@push('styles')
+<style>
+    body{
+        padding-top: 0px !important; 
+    }
+</style>

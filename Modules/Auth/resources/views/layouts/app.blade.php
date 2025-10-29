@@ -23,12 +23,16 @@
         body {
             display: flex;
             flex-direction: column;
-            padding-top: 56px;
+            background-color: #0f1923;
+            padding-top: 60px;
+            min-height: 100vh;
         }
         
         /* Main content takes remaining space */
         main {
             flex: 1 0 auto;
+            padding: 0;
+            margin-top: 56px;
         }
         
         /* Footer stays at bottom */
@@ -64,7 +68,7 @@
             min-height: 100vh;
             display: flex;
             align-items: center;
-            background-color: #f8f9fa;
+            background-color: #1a2332;
         }
 
         .hero .hero-text {
@@ -99,19 +103,19 @@
         }
 
         section.info {
-            background-color: #fff;
+            background-color: #0f1923;
         }
 
         section.security {
-            background-color: #f1f5f9;
+            background-color: #1a2332;
         }
 
         section.features {
-            background-color: #fff;
+            background-color: #0f1923;
         }
 
         section.testimonials {
-            background-color: #f1f5f9;
+            background-color: #1a2332;
         }
 
         .feature-icon {
@@ -120,22 +124,32 @@
             margin-bottom: 20px;
         }
 
+        .privacy-card {
+            padding: 30px;
+            border: 2px solid ##f1f5f9;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .privacy-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
         .feature-card {
             padding: 30px;
-            border: 2px solid #eee;
             border-radius: 10px;
             transition: all 0.3s ease;
         }
 
         .feature-card:hover {
-            border-color: var(--color-primary);
             transform: translateY(-5px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
         .testimonial-card {
-            background: white;
             border-radius: 8px;
+            border: 2px solid #fff;
             padding: 30px;
             box-shadow: 0 0 15px rgb(0 0 0 / 0.1);
             margin-bottom: 30px;
@@ -183,6 +197,25 @@
         .navbar-toggler {
             padding: 0.25rem 0.5rem;
             font-size: 1rem;
+        }
+
+        /* Dropdown styling */
+        .dropdown-menu {
+            background-color: #1a2332;
+            border: 1px solid #2a3442;
+        }
+
+        .dropdown-item {
+            color: #fff;
+        }
+
+        .dropdown-item:hover {
+            background-color: #2a3442;
+            color: var(--color-primary);
+        }
+
+        .dropdown-divider {
+            border-top: 1px solid #2a3442;
         }
     </style>
     
@@ -252,12 +285,12 @@
     @endif
 
     <!-- Main Content -->
-    <main class="py-4">
+    <main>
         @yield('content')
     </main>
 
     <!-- Footer -->
-    <footer class="bg-dark text-white text-center py-3 mt-5">
+    <footer class="bg-dark text-white text-center py-3">
         <div class="container">
             <p class="mb-0">&copy; 2025 Valorent - Sewa Akun Valorant</p>
         </div>
