@@ -9,6 +9,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     
     <style>
+        :root {
+        --color-primary: #ff4654;
+        --color-secondary: #ba3a46; 
+        --color-tertiary: #6c757d;
+        }
         /* Make body use flexbox and full height */
         html, body {
             height: 100%;
@@ -29,6 +34,100 @@
         footer {
             flex-shrink: 0;
         }
+
+        .btn-primary {
+            background-color: var(--color-primary);
+            border-color: var(--color-primary);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background-color: #e63e4b;
+            border-color: #e63e4b;
+            color: #fff;
+        }
+
+        .btn-outline-primary {
+            color: var(--color-primary);
+            border-color: var(--color-primary);
+            background-color: transparent;
+        }
+
+        .btn-outline-primary:hover {
+            border-color: var(--color-primary);
+            background-color: var(--color-primary);
+            color: #fff;
+        }
+         /* Custom styling for hero section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background-color: #f8f9fa;
+        }
+
+        .hero .hero-text {
+            max-width: 600px;
+        }
+
+        .hero .hero-image img {
+            border-radius: 10px;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        /* Section styling */
+        section.info, section.security, section.features, section.testimonials {
+            padding: 60px 0;
+        }
+
+        section.info {
+            background-color: #fff;
+        }
+
+        section.security {
+            background-color: #f1f5f9;
+        }
+
+        section.features {
+            background-color: #fff;
+        }
+
+        section.testimonials {
+            background-color: #f1f5f9;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--color-primary);
+            margin-bottom: 20px;
+        }
+
+        .feature-card {
+            padding: 30px;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: var(--color-primary);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .testimonial-card {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 0 15px rgb(0 0 0 / 0.1);
+            margin-bottom: 30px;
+        }
     </style>
     
     @stack('styles')
@@ -37,7 +136,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="{{ route('catalog.index') }}">Valorent</a>
+            <a class="navbar-brand" href="{{ route('home') }}">Valorent</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -108,9 +207,10 @@
         </div>
     </footer>
 
-    <!-- Bootstrap JS -->
+    <!-- Bootstrap JS & Bootstrap Icons -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" />
+
     @stack('scripts')
 </body>
 </html>

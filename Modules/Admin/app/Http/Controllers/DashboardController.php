@@ -45,7 +45,19 @@ class DashboardController extends Controller
         // Get top rented units
         $topRentedUnits = Unit::select('units.*', DB::raw('COUNT(rentals.id) as rental_count'))
             ->join('rentals', 'units.id', '=', 'rentals.unit_id')
-            ->groupBy('units.id')
+            ->groupBy(
+                'units.id',
+                'units.code',
+                'units.name',
+                'units.description',
+                'units.rank',
+                'units.level',
+                'units.price_per_day',
+                'units.image',
+                'units.status',
+                'units.created_at',
+                'units.updated_at'
+            )
             ->orderBy('rental_count', 'desc')
             ->limit(5)
             ->get();

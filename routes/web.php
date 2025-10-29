@@ -3,5 +3,5 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return redirect()->route('catalog.index');
-});
+    return view('welcome'); // Halaman utama sebelum login
+})->name('home');
