@@ -15,30 +15,12 @@
 
     <div class="row g-4">
         <!-- Unit Image -->
-        <div class="col-lg-6">
-            <div class="unit-detail-image-card position-relative">
-                @if($unit->image)
-                    <img src="{{ asset('storage/' . $unit->image) }}" alt="{{ $unit->name }}" 
-                         class="unit-detail-image w-100">
-                @else
-                    <div class="unit-detail-placeholder d-flex align-items-center justify-content-center">
-                        <i class="bi bi-controller text-white" style="font-size: 10rem; opacity: 0.2;"></i>
-                    </div>
-                @endif
-                
-                <!-- Image Overlay Effect -->
-                <div class="image-glow"></div>
-                
-                <!-- Status Badge on Image -->
-                <div class="position-absolute top-0 end-0 m-4">
-                    @if($unit->status === 'available')
-                        <span class="badge-large bg-success">
-                            <i class="bi bi-check-circle-fill me-2"></i>AVAILABLE
-                        </span>
-                    @elseif($unit->status === 'rented')
-                        <span class="badge-large bg-danger">
-                            <i class="bi bi-lock-fill me-2"></i>RENTED
-                        </span>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body text-center bg-secondary text-white" style="min-height: 400px;">
+                    @if($unit->image)
+                        <img src="{{ asset('storage/' . $unit->image) }}" alt="{{ $unit->name }}" 
+                             class="img-fluid" style="max-height: 400px; object-fit: contain;">
                     @else
                         <span class="badge-large bg-warning">
                             <i class="bi bi-tools me-2"></i>MAINTENANCE

@@ -30,6 +30,24 @@ class Unit extends Model
     ];
 
     /**
+     * Get the image URL attribute
+     */
+    public function getImageUrlAttribute(): ?string
+    {
+        if (!$this->image) {
+            return null;
+        }
+
+        // If image path already starts with http/https, return as is
+        if (str_starts_with($this->image, 'http')) {
+            return $this->image;
+        }
+
+        // Return asset URL
+        return asset($this->image);
+    }
+
+    /**
      * Check if unit is available for rent
      */
     public function isAvailable(): bool

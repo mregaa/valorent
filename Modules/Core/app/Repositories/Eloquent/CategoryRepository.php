@@ -51,4 +51,13 @@ class CategoryRepository implements CategoryRepositoryInterface
         }
         return false;
     }
+
+    public function search(string $query)
+    {
+        return Category::where(function($q) use ($query) {
+            $q->where('name', 'LIKE', "%{$query}%")
+              ->orWhere('slug', 'LIKE', "%{$query}%")
+              ->orWhere('description', 'LIKE', "%{$query}%");
+        });
+    }
 }

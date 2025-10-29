@@ -89,9 +89,9 @@
                                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 transition">
                             <p class="mt-1 text-sm text-gray-500">Max file size: 2MB. Formats: jpeg, png, jpg, gif</p>
                             
-                            @if($unit->image)
+                            @if($unit->image_url)
                                 <div class="mt-2 flex items-center">
-                                    <img src="{{ asset($unit->image) }}" alt="{{ $unit->name }}" class="h-16 w-16 rounded-md object-cover">
+                                    <img src="{{ $unit->image_url }}" alt="{{ $unit->name }}" class="h-16 w-16 rounded-md object-cover" onerror="this.style.display='none';">
                                     <div class="ml-4">
                                         <label class="inline-flex items-center">
                                             <input type="checkbox" name="remove_image" value="1"

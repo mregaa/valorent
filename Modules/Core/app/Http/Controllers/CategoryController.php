@@ -19,9 +19,16 @@ class CategoryController extends Controller
         $this->categoryRepository = $categoryRepository;
     }
 
-    public function index(): View
+    public function index(Request $request): View
     {
-        $categories = $this->categoryRepository->paginate(10); // 10 items per page
+        $search = $request->get('search');
+        
+        if ($search) {
+            $categories = $this->categoryRepository->search($search)->paginate(10);
+        } else {
+            $categories = $this->categoryRepository->paginate(10);
+        }
+        
         return view('core::categories.index', compact('categories'));
     }
 

@@ -1,13 +1,27 @@
 <x-admin::layouts.master>
     <div class="p-6">
         <div class="mb-6">
-            <h1 class="text-3xl font-bold text-gray-800">Rental History Report</h1>
-            <p class="text-gray-600">View all rental transactions on the platform</p>
+            <h1 class="text-3xl font-bold text-gray-800">Rentals Management</h1>
+            <p class="text-gray-600">Manage all rental transactions</p>
         </div>
+
+        @if(session('success'))
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4 flex items-center">
+                <i class="fas fa-check-circle mr-2"></i>
+                <span>{{ session('success') }}</span>
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4 flex items-center">
+                <i class="fas fa-exclamation-circle mr-2"></i>
+                <span>{{ session('error') }}</span>
+            </div>
+        @endif
 
         <div class="bg-white rounded-xl shadow-sm border overflow-hidden">
             <div class="p-6 border-b">
-                <form method="GET" action="{{ route('admin.reports.rental-history') }}">
+                <form method="GET" action="{{ route('rental.index') }}">
                     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                         <div class="flex-1">
                             <div class="relative">
@@ -19,16 +33,13 @@
                         </div>
                         <div class="flex gap-2">
                             @if(request('search'))
-                                <a href="{{ route('admin.reports.rental-history') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition">
+                                <a href="{{ route('rental.index') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition">
                                     <i class="fas fa-times mr-2"></i> Clear
                                 </a>
                             @endif
                             <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white font-medium rounded-lg transition duration-200">
                                 <i class="fas fa-search mr-2"></i> Search
                             </button>
-                            <a href="{{ route('admin.reports.rental-history.export') }}" class="inline-flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition duration-200">
-                                <i class="fas fa-download mr-2"></i> Export CSV
-                            </a>
                         </div>
                     </div>
                 </form>
@@ -38,10 +49,10 @@
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rental Code</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Unit</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Dates</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rental Period</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Price</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                             <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
@@ -50,24 +61,48 @@
                     <tbody class="bg-white divide-y divide-gray-200">
                         @forelse($rentals as $rental)
                         <tr class="hover:bg-gray-50 transition">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#{{ $rental->id }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm font-medium text-gray-900">{{ $rental->user->name }}</div>
-                                <div class="text-sm text-gray-500">{{ $rental->user->email }}</div>
+                                <div class="text-sm font-medium text-gray-900">{{ $rental->rental_code }}</div>
+                                <div class="text-sm text-gray-500">{{ $rental->created_at->format('M d, Y') }}</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-10 w-10 rounded-full bg-primary-100 flex items-center justify-center">
+                                        <i class="fas fa-user text-primary-600"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <div class="text-sm font-medium text-gray-900">{{ $rental->user->name }}</div>
+                                        <div class="text-sm text-gray-500">{{ $rental->user->email }}</div>
+                                    </div>
+                                </div>
                             </td>
                             <td class="px-6 py-4">
-                                <div class="text-sm font-medium text-gray-900">{{ $rental->unit->name }}</div>
-                                <div class="text-sm text-gray-500">{{ $rental->unit->code }}</div>
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-10 w-10 rounded-md overflow-hidden bg-primary-100 flex items-center justify-center">
+                                        @if($rental->unit->image_url)
+                                            <img src="{{ $rental->unit->image_url }}" alt="{{ $rental->unit->name }}" class="h-full w-full object-cover" onerror="this.onerror=null; this.parentElement.innerHTML='<i class=\'fas fa-gamepad text-primary-600\'></i>';">
+                                        @else
+                                            <i class="fas fa-gamepad text-primary-600"></i>
+                                        @endif
+                                    </div>
+                                    <div class="ml-4">
+                                        <div class="text-sm font-medium text-gray-900">{{ $rental->unit->name }}</div>
+                                        <div class="text-sm text-gray-500">{{ $rental->unit->code }}</div>
+                                    </div>
+                                </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">{{ $rental->rental_date ? $rental->rental_date->format('M d, Y') : '-' }}</div>
-                                <div class="text-sm text-gray-500">to {{ $rental->due_date ? $rental->due_date->format('M d, Y') : '-' }}</div>
+                                <div class="text-sm text-gray-900">{{ $rental->rental_date->format('M d, Y') }}</div>
+                                <div class="text-sm text-gray-500">to {{ $rental->due_date->format('M d, Y') }}</div>
                                 @if($rental->return_date)
                                     <div class="text-sm text-green-600">Returned: {{ $rental->return_date->format('M d, Y') }}</div>
                                 @endif
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                Rp {{ number_format($rental->total_price, 0, ',', '.') }}
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm font-medium text-gray-900">Rp {{ number_format($rental->total_price, 0, ',', '.') }}</div>
+                                @if($rental->fine > 0)
+                                    <div class="text-sm text-red-600">Fine: Rp {{ number_format($rental->fine, 0, ',', '.') }}</div>
+                                @endif
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
@@ -79,17 +114,19 @@
                                 </span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <a href="{{ route('rental.show', $rental->id) }}" class="text-blue-600 hover:text-blue-900 p-2 rounded-full hover:bg-blue-50" title="View">
-                                    <i class="fas fa-eye"></i>
-                                </a>
+                                <div class="flex justify-end space-x-2">
+                                    <a href="{{ route('rental.show', $rental->id) }}" class="text-blue-600 hover:text-blue-900 p-2 rounded-full hover:bg-blue-50" title="View">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                         @empty
                         <tr>
                             <td colspan="7" class="px-6 py-12 text-center">
                                 <div class="flex flex-col items-center justify-center">
-                                    <i class="fas fa-history text-gray-300 text-4xl mb-4"></i>
-                                    <h3 class="text-lg font-medium text-gray-900 mb-1">No rental history found</h3>
+                                    <i class="fas fa-clipboard-list text-gray-300 text-4xl mb-4"></i>
+                                    <h3 class="text-lg font-medium text-gray-900 mb-1">No rentals found</h3>
                                     <p class="text-gray-500">No rental transactions have been recorded yet</p>
                                 </div>
                             </td>

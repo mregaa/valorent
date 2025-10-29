@@ -23,9 +23,16 @@ class UnitController extends Controller
         $this->categoryRepository = $categoryRepository;
     }
 
-    public function index(): View
+    public function index(Request $request): View
     {
-        $units = $this->unitRepository->paginate(10);
+        $search = $request->get('search');
+        
+        if ($search) {
+            $units = $this->unitRepository->search($search)->paginate(10);
+        } else {
+            $units = $this->unitRepository->paginate(10);
+        }
+        
         return view('admin::units.index', compact('units'));
     }
 
@@ -54,7 +61,7 @@ class UnitController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '_' . Str::slug($request->name) . '.' . $image->getClientOriginalExtension();
-            $image->storeAs('public/units', $imageName);
+            $image->storeAs('units', $imageName, 'public');
             $data['image'] = 'storage/units/' . $imageName;
         }
 
@@ -117,7 +124,7 @@ class UnitController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '_' . Str::slug($request->name) . '.' . $image->getClientOriginalExtension();
-            $image->storeAs('public/units', $imageName);
+            $image->storeAs('units', $imageName, 'public');
             $data['image'] = 'storage/units/' . $imageName;
 
             // Delete old image if exists

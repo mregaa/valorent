@@ -7,7 +7,7 @@ use Modules\Admin\Http\Controllers\UserController;
 use Modules\Admin\Http\Controllers\DashboardController;
 use Modules\Admin\Http\Controllers\ReportController;
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::resource('admins', AdminController::class)->names('admin');
     

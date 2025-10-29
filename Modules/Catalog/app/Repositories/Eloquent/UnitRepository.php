@@ -47,6 +47,18 @@ class UnitRepository implements UnitRepositoryInterface
             ->get();
     }
 
+    public function search(string $query)
+    {
+        return $this->model->with('categories')
+            ->where(function($q) use ($query) {
+                $q->where('name', 'LIKE', "%{$query}%")
+                  ->orWhere('code', 'LIKE', "%{$query}%")
+                  ->orWhere('description', 'LIKE', "%{$query}%")
+                  ->orWhere('rank', 'LIKE', "%{$query}%");
+            })
+            ->orderBy('created_at', 'desc');
+    }
+
     public function getAvailableUnits(): Collection
     {
         return $this->model->with('categories')

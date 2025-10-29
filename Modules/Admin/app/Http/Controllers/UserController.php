@@ -12,9 +12,19 @@ use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        $users = User::paginate(10);
+        $search = $request->get('search');
+        
+        if ($search) {
+            $users = User::where(function($q) use ($search) {
+                $q->where('name', 'LIKE', "%{$search}%")
+                  ->orWhere('email', 'LIKE', "%{$search}%");
+            })->paginate(10);
+        } else {
+            $users = User::paginate(10);
+        }
+        
         return view('admin::users.index', compact('users'));
     }
 

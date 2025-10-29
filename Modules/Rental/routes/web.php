@@ -10,6 +10,9 @@ use Modules\Rental\App\Http\Controllers\RentalController;
 */
 
 Route::middleware('auth')->prefix('rental')->name('rental.')->group(function () {
+    // Admin: View all rentals
+    Route::get('/', [RentalController::class, 'index'])->name('index');
+    
     // Create rental
     Route::get('/create/{unitId}', [RentalController::class, 'create'])->name('create');
     Route::post('/store/{unitId}', [RentalController::class, 'store'])->name('store');
