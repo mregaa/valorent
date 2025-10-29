@@ -23,6 +23,7 @@
         body {
             display: flex;
             flex-direction: column;
+            padding-top: 56px;
         }
         
         /* Main content takes remaining space */
@@ -76,9 +77,20 @@
             height: auto;
         }
 
+        .navbar {
+            padding: 0.5rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1030;
+            transition: all 0.3s ease;
+        }
+
         .navbar-brand {
             font-weight: bold;
-            font-size: 1.5rem;
+            font-size: 1.25rem;
+            padding: 0.5rem 0;
         }
 
         /* Section styling */
@@ -127,6 +139,50 @@
             padding: 30px;
             box-shadow: 0 0 15px rgb(0 0 0 / 0.1);
             margin-bottom: 30px;
+        }
+
+        /* Navbar hover effect */
+        .navbar-dark .navbar-nav .nav-link {
+            position: relative;
+            padding: 0.5rem 1rem;
+            padding-bottom: 1.25rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-dark .navbar-nav .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--color-primary);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-dark .navbar-nav .nav-link:hover::after,
+        .navbar-dark .navbar-nav .nav-link.active::after {
+            transform: scaleX(1);
+        }
+
+        .navbar-dark .navbar-nav .nav-link:hover {
+            color: #fff;
+        }
+
+        .navbar-dark .navbar-nav .nav-item {
+            margin: 0;
+        }
+
+        .navbar-collapse {
+            align-items: center;
+        }
+
+        .navbar-toggler {
+            padding: 0.25rem 0.5rem;
+            font-size: 1rem;
         }
     </style>
     
