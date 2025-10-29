@@ -73,8 +73,8 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/admin/rentals" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 transition">
-                                <i class="fas fa-shopping-cart text-primary-600"></i>
+                            <a href="{{ route('rental.index') }}" class="flex items-center space-x-3 p-3 rounded-lg {{ request()->routeIs('rental.index') ? 'bg-blue-50 text-primary-600 font-medium' : 'hover:bg-gray-100' }} transition">
+                                <i class="fas fa-clipboard-list text-primary-600"></i>
                                 <span>Rentals</span>
                             </a>
                         </li>
@@ -91,12 +91,6 @@
                             <h2 class="text-xl font-semibold text-gray-800">@yield('title', 'Admin Panel')</h2>
                         </div>
                         <div class="flex items-center space-x-4">
-                            <div class="relative">
-                                <button class="p-1 text-gray-600 hover:text-gray-900">
-                                    <i class="fas fa-bell"></i>
-                                </button>
-                                <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
-                            </div>
                             <div class="flex items-center space-x-2">
                                 <div class="w-8 h-8 rounded-full bg-primary-500 flex items-center justify-center text-white font-bold">
                                     {{ substr(Auth::user()->name ?? 'Admin', 0, 1) }}

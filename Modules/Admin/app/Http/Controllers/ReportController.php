@@ -18,11 +18,27 @@ class ReportController extends Controller
         return view('admin::reports.index');
     }
 
-    public function rentalHistory(): View
+    public function rentalHistory(Request $request): View
     {
-        $rentals = Rental::with(['user', 'unit'])
-            ->orderBy('created_at', 'desc')
-            ->paginate(20);
+        $search = $request->get('search');
+        
+        $query = Rental::with(['user', 'unit']);
+        
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->where('rental_code', 'LIKE', "%{$search}%")
+                  ->orWhereHas('user', function($q) use ($search) {
+                      $q->where('name', 'LIKE', "%{$search}%")
+                        ->orWhere('email', 'LIKE', "%{$search}%");
+                  })
+                  ->orWhereHas('unit', function($q) use ($search) {
+                      $q->where('name', 'LIKE', "%{$search}%")
+                        ->orWhere('code', 'LIKE', "%{$search}%");
+                  });
+            });
+        }
+        
+        $rentals = $query->orderBy('created_at', 'desc')->paginate(20);
 
         return view('admin::reports.rental-history', compact('rentals'));
     }

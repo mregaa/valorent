@@ -14,21 +14,31 @@
 
         <div class="bg-white rounded-xl shadow-sm border overflow-hidden">
             <div class="p-6 border-b">
-                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                    <div class="flex-1">
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                <i class="fas fa-search text-gray-400"></i>
+                <form method="GET" action="{{ route('admin.units.index') }}">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                        <div class="flex-1">
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                    <i class="fas fa-search text-gray-400"></i>
+                                </div>
+                                <input type="text" name="search" value="{{ request('search') }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2.5" placeholder="Search units by code, name, rank...">
                             </div>
-                            <input type="text" id="search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2.5" placeholder="Search units...">
+                        </div>
+                        <div class="flex gap-2">
+                            @if(request('search'))
+                                <a href="{{ route('admin.units.index') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition">
+                                    <i class="fas fa-times mr-2"></i> Clear
+                                </a>
+                            @endif
+                            <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white font-medium rounded-lg transition duration-200">
+                                <i class="fas fa-search mr-2"></i> Search
+                            </button>
+                            <a href="{{ route('admin.units.create') }}" class="inline-flex items-center px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition duration-200">
+                                <i class="fas fa-plus mr-2"></i> Add Unit
+                            </a>
                         </div>
                     </div>
-                    <div>
-                        <a href="{{ route('admin.units.create') }}" class="inline-flex items-center px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition duration-200">
-                            <i class="fas fa-plus mr-2"></i> Add Unit
-                        </a>
-                    </div>
-                </div>
+                </form>
             </div>
 
             <div class="overflow-x-auto">
@@ -50,9 +60,9 @@
                             </td>
                             <td class="px-6 py-4">
                                 <div class="flex items-center">
-                                    <div class="flex-shrink-0 h-10 w-10 rounded-md bg-primary-100 flex items-center justify-center">
-                                        @if($unit->image)
-                                            <img src="{{ asset($unit->image) }}" alt="{{ $unit->name }}" class="h-10 w-10 rounded-md object-cover">
+                                    <div class="flex-shrink-0 h-10 w-10 rounded-md overflow-hidden bg-primary-100 flex items-center justify-center">
+                                        @if($unit->image_url)
+                                            <img src="{{ $unit->image_url }}" alt="{{ $unit->name }}" class="h-full w-full object-cover" onerror="this.onerror=null; this.parentElement.innerHTML='<i class=\'fas fa-gamepad text-primary-600\'></i>';">
                                         @else
                                             <i class="fas fa-gamepad text-primary-600"></i>
                                         @endif
@@ -120,7 +130,7 @@
                         of <span class="font-medium">{{ $units->total() }}</span> results
                     </div>
                     <div class="flex space-x-2">
-                        {{ $units->links() }}
+                        {{ $units->appends(request()->query())->links() }}
                     </div>
                 </div>
             </div>

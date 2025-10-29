@@ -24,6 +24,28 @@ class RentalController extends Controller
     }
 
     /**
+     * Show all rentals (Admin only)
+     */
+    public function index(Request $request)
+    {
+        // Check if user is admin
+        if (!Auth::user()->isAdmin()) {
+            return redirect()->route('rental.my-rentals')
+                ->with('error', 'Unauthorized access.');
+        }
+
+        $search = $request->get('search');
+        
+        if ($search) {
+            $rentals = $this->rentalRepository->search($search)->paginate(10);
+        } else {
+            $rentals = $this->rentalRepository->paginate(10);
+        }
+        
+        return view('rental::index', compact('rentals'));
+    }
+
+    /**
      * Show rental form
      */
     public function create($unitId)

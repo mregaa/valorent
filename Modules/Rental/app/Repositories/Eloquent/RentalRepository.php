@@ -5,6 +5,7 @@ namespace Modules\Rental\App\Repositories\Eloquent;
 use Modules\Rental\App\Repositories\RentalRepositoryInterface;
 use Modules\Rental\App\Entities\Rental;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Carbon\Carbon;
 
 class RentalRepository implements RentalRepositoryInterface
@@ -19,6 +20,30 @@ class RentalRepository implements RentalRepositoryInterface
     public function all(): Collection
     {
         return $this->model->with(['user', 'unit'])->get();
+    }
+
+    public function paginate(int $perPage = 15): LengthAwarePaginator
+    {
+        return $this->model->with(['user', 'unit'])
+            ->orderBy('created_at', 'desc')
+            ->paginate($perPage);
+    }
+
+    public function search(string $query)
+    {
+        return $this->model->with(['user', 'unit'])
+            ->where(function($q) use ($query) {
+                $q->where('rental_code', 'LIKE', "%{$query}%")
+                  ->orWhereHas('user', function($q) use ($query) {
+                      $q->where('name', 'LIKE', "%{$query}%")
+                        ->orWhere('email', 'LIKE', "%{$query}%");
+                  })
+                  ->orWhereHas('unit', function($q) use ($query) {
+                      $q->where('name', 'LIKE', "%{$query}%")
+                        ->orWhere('code', 'LIKE', "%{$query}%");
+                  });
+            })
+            ->orderBy('created_at', 'desc');
     }
 
     public function findById(int $id): ?Rental

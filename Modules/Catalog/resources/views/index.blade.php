@@ -69,9 +69,10 @@
                     <!-- Unit Image Placeholder -->
                     <div class="card-img-top bg-secondary text-white d-flex align-items-center justify-content-center" 
                          style="height: 200px;">
-                        @if($unit->image)
-                            <img src="{{ asset('storage/' . $unit->image) }}" alt="{{ $unit->name }}" 
-                                 class="img-fluid" style="max-height: 200px; object-fit: cover;">
+                        @if($unit->image_url)
+                            <img src="{{ $unit->image_url }}" alt="{{ $unit->name }}" 
+                                 class="img-fluid" style="max-height: 200px; object-fit: cover;"
+                                 onerror="this.onerror=null; this.parentElement.innerHTML='<i class=\"bi bi-controller\" style=\"font-size: 4rem;\"></i>';">
                         @else
                             <i class="bi bi-controller" style="font-size: 4rem;"></i>
                         @endif

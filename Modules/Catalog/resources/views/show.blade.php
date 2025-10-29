@@ -16,9 +16,10 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body text-center bg-secondary text-white" style="min-height: 400px;">
-                    @if($unit->image)
-                        <img src="{{ asset('storage/' . $unit->image) }}" alt="{{ $unit->name }}" 
-                             class="img-fluid" style="max-height: 400px; object-fit: contain;">
+                    @if($unit->image_url)
+                        <img src="{{ $unit->image_url }}" alt="{{ $unit->name }}" 
+                             class="img-fluid" style="max-height: 400px; object-fit: contain;"
+                             onerror="this.onerror=null; this.parentElement.innerHTML='<i class=\"bi bi-controller\" style=\"font-size: 8rem;\"></i><p class=\"mt-3\">No image available</p>';">
                     @else
                         <i class="bi bi-controller" style="font-size: 8rem;"></i>
                         <p class="mt-3">No image available</p>

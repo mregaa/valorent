@@ -10,8 +10,8 @@
                 <div class="p-6 border-b">
                     <div class="flex flex-col md:flex-row md:items-start justify-between">
                         <div class="flex items-start mb-4 md:mb-0">
-                            @if($unit->image)
-                                <img src="{{ asset($unit->image) }}" alt="{{ $unit->name }}" class="h-24 w-24 rounded-lg object-cover">
+                            @if($unit->image_url)
+                                <img src="{{ $unit->image_url }}" alt="{{ $unit->name }}" class="h-24 w-24 rounded-lg object-cover" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'h-24 w-24 rounded-lg bg-gray-200 flex items-center justify-center\'><i class=\'fas fa-gamepad text-4xl text-gray-500\'></i></div>';">
                             @else
                                 <div class="h-24 w-24 rounded-lg bg-gray-200 flex items-center justify-center">
                                     <i class="fas fa-gamepad text-4xl text-gray-500"></i>

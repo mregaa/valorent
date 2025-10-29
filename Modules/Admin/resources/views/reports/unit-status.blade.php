@@ -36,9 +36,9 @@
                         <tr class="hover:bg-gray-50 transition">
                             <td class="px-6 py-4">
                                 <div class="flex items-center">
-                                    <div class="flex-shrink-0 h-10 w-10 rounded-md bg-primary-100 flex items-center justify-center">
-                                        @if($unit->image)
-                                            <img src="{{ asset($unit->image) }}" alt="{{ $unit->name }}" class="h-10 w-10 rounded-md object-cover">
+                                    <div class="flex-shrink-0 h-10 w-10 rounded-md overflow-hidden bg-primary-100 flex items-center justify-center">
+                                        @if($unit->image_url)
+                                            <img src="{{ $unit->image_url }}" alt="{{ $unit->name }}" class="h-full w-full object-cover" onerror="this.onerror=null; this.parentElement.innerHTML='<i class=\'fas fa-gamepad text-primary-600\'></i>';">
                                         @else
                                             <i class="fas fa-gamepad text-primary-600"></i>
                                         @endif

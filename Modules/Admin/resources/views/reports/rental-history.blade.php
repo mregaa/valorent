@@ -7,21 +7,31 @@
 
         <div class="bg-white rounded-xl shadow-sm border overflow-hidden">
             <div class="p-6 border-b">
-                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                    <div class="flex-1">
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                <i class="fas fa-search text-gray-400"></i>
+                <form method="GET" action="{{ route('admin.reports.rental-history') }}">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                        <div class="flex-1">
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                    <i class="fas fa-search text-gray-400"></i>
+                                </div>
+                                <input type="text" name="search" value="{{ request('search') }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2.5" placeholder="Search by rental code, user, unit...">
                             </div>
-                            <input type="text" id="search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2.5" placeholder="Search rentals...">
+                        </div>
+                        <div class="flex gap-2">
+                            @if(request('search'))
+                                <a href="{{ route('admin.reports.rental-history') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition">
+                                    <i class="fas fa-times mr-2"></i> Clear
+                                </a>
+                            @endif
+                            <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white font-medium rounded-lg transition duration-200">
+                                <i class="fas fa-search mr-2"></i> Search
+                            </button>
+                            <a href="{{ route('admin.reports.rental-history.export') }}" class="inline-flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition duration-200">
+                                <i class="fas fa-download mr-2"></i> Export CSV
+                            </a>
                         </div>
                     </div>
-                    <div class="flex space-x-3">
-                        <a href="{{ route('admin.reports.rental-history.export') }}" class="inline-flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition duration-200">
-                            <i class="fas fa-download mr-2"></i> Export CSV
-                        </a>
-                    </div>
-                </div>
+                </form>
             </div>
 
             <div class="overflow-x-auto">
@@ -50,8 +60,11 @@
                                 <div class="text-sm text-gray-500">{{ $rental->unit->code }}</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">{{ $rental->start_date->format('M d, Y') }}</div>
-                                <div class="text-sm text-gray-500">to {{ $rental->end_date->format('M d, Y') }}</div>
+                                <div class="text-sm text-gray-900">{{ $rental->rental_date ? $rental->rental_date->format('M d, Y') : '-' }}</div>
+                                <div class="text-sm text-gray-500">to {{ $rental->due_date ? $rental->due_date->format('M d, Y') : '-' }}</div>
+                                @if($rental->return_date)
+                                    <div class="text-sm text-green-600">Returned: {{ $rental->return_date->format('M d, Y') }}</div>
+                                @endif
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                 Rp {{ number_format($rental->total_price, 0, ',', '.') }}
@@ -59,14 +72,14 @@
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
                                     @if($rental->status === 'active') bg-yellow-100 text-yellow-800
-                                    @elseif($rental->status === 'completed') bg-green-100 text-green-800
+                                    @elseif($rental->status === 'returned') bg-green-100 text-green-800
                                     @elseif($rental->status === 'cancelled') bg-red-100 text-red-800
                                     @else bg-gray-100 text-gray-800 @endif">
                                     {{ ucfirst($rental->status) }}
                                 </span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <a href="#" class="text-blue-600 hover:text-blue-900 p-2 rounded-full hover:bg-blue-50" title="View">
+                                <a href="{{ route('rental.show', $rental->id) }}" class="text-blue-600 hover:text-blue-900 p-2 rounded-full hover:bg-blue-50" title="View">
                                     <i class="fas fa-eye"></i>
                                 </a>
                             </td>
@@ -94,7 +107,7 @@
                         of <span class="font-medium">{{ $rentals->total() }}</span> results
                     </div>
                     <div class="flex space-x-2">
-                        {{ $rentals->links() }}
+                        {{ $rentals->appends(request()->query())->links() }}
                     </div>
                 </div>
             </div>
