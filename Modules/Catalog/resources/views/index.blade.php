@@ -68,9 +68,10 @@
                 <div class="unit-card position-relative h-100">
                     <!-- Unit Image -->
                     <div class="unit-image-container position-relative overflow-hidden">
-                        @if($unit->image)
-                            <img src="{{ asset('storage/' . $unit->image) }}" alt="{{ $unit->name }}" 
-                                 class="unit-image w-100">
+                        @if($unit->image_url)
+                            <img src="{{ $unit->image_url }}" alt="{{ $unit->name }}" 
+                                 class="unit-image w-100" 
+                                 onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'unit-placeholder bg-gradient d-flex align-items-center justify-content-center\'><i class=\'bi bi-controller text-white\' style=\'font-size: 5rem; opacity: 0.3;\'></i></div>';">
                         @else
                             <div class="unit-placeholder bg-gradient d-flex align-items-center justify-content-center">
                                 <i class="bi bi-controller text-white" style="font-size: 5rem; opacity: 0.3;"></i>
