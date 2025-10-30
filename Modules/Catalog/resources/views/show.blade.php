@@ -18,12 +18,13 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body text-center bg-secondary text-white" style="min-height: 400px;">
-                    @if($unit->image)
-                        <img src="{{ asset('storage/' . $unit->image) }}" alt="{{ $unit->name }}" 
-                             class="img-fluid" style="max-height: 400px; object-fit: contain;">
+                    @if($unit->image_url)
+                        <img src="{{ $unit->image_url }}" alt="{{ $unit->name }}" 
+                             class="img-fluid" style="max-height: 400px; object-fit: contain;"
+                             onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'badge-large bg-warning\'><i class=\'bi bi-controller me-2\'></i>NO IMAGE</span>';">
                     @else
                         <span class="badge-large bg-warning">
-                            <i class="bi bi-tools me-2"></i>MAINTENANCE
+                            <i class="bi bi-controller me-2"></i>NO IMAGE
                         </span>
                     @endif
                 </div>
