@@ -58,7 +58,9 @@
                     </div>
                     <div class="stat-content">
                         <div class="stat-label">Total Fines</div>
-                        <div class="stat-number text-danger">Rp {{ number_format($rentals->sum('fine'), 0, ',', '.') }}</div>
+                        <div class="stat-number text-danger">
+                            Rp {{ number_format($rentals->sum(fn($r) => $r->getCurrentFine()), 0, ',', '.') }}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -112,8 +114,11 @@
                                             <div class="price-text">Rp {{ number_format($rental->total_price, 0, ',', '.') }}</div>
                                         </td>
                                         <td>
-                                            @if($rental->fine > 0)
-                                                <div class="fine-text">Rp {{ number_format($rental->fine, 0, ',', '.') }}</div>
+                                            @php
+                                                $currentFine = $rental->getCurrentFine();
+                                            @endphp
+                                            @if($currentFine > 0)
+                                                <div class="fine-text">Rp {{ number_format($currentFine, 0, ',', '.') }}</div>
                                             @else
                                                 <span class="text-muted">-</span>
                                             @endif

@@ -183,21 +183,26 @@ class RentalController extends Controller
 
         DB::beginTransaction();
         try {
-            // Update rental status to returned
-            $this->rentalRepository->update($rental->id, [
-                'status' => 'returned',
-                'return_date' => Carbon::now(),
-            ]);
+            $success = $this->rentalRepository->returnRental($rental->id);
 
-            // Update unit status to available
-            $this->unitRepository->update($rental->unit_id, [
-                'status' => 'available',
-            ]);
+            if (!$success) {
+                throw new \Exception('Failed to process return.');
+            }
 
             DB::commit();
 
+            // Refresh rental untuk mendapatkan data terbaru (termasuk fine)
+            $rental->refresh();
+
+            // Buat pesan yang lebih informatif
+            $message = 'Rental returned successfully.';
+            if ($rental->fine > 0) {
+                $message .= ' Total fine: Rp ' . number_format($rental->fine, 0, ',', '.');
+            }
+
             return redirect()->route('rental.my-rentals')
-                ->with('success', 'Rental returned successfully.');
+                ->with('success', $message);
+
 
         } catch (\Exception $e) {
             DB::rollBack();

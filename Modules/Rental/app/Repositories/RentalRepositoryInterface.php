@@ -28,4 +28,8 @@ interface RentalRepositoryInterface
     public function update(int $id, array $data): bool;
     
     public function returnRental(int $id): bool;
+    
+    public function search(string $query);
+
+    public function paginate(int $perPage = 15);
 }

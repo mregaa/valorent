@@ -44,9 +44,17 @@
                     </div>
 
                     @if($rental->status === 'active' && $rental->isOverdue())
+                        @php
+                            $daysOverdue = $rental->due_date->diffInDays(Carbon\Carbon::now());
+                            $currentFine = $rental->getCurrentFine();
+                        @endphp
                         <div class="overdue-alert mt-3">
                             <i class="bi bi-exclamation-triangle me-2"></i>
-                            <span>This rental is overdue! Please return it immediately!.</span>
+                            <span>
+                                This rental is <strong>{{ $daysOverdue }} day(s) overdue</strong>! 
+                                Current fine: <strong>Rp {{ number_format($currentFine, 0, ',', '.') }}</strong>. 
+                                Please return it immediately to avoid additional charges.
+                            </span>
                         </div>
                     @endif
                 </div>
@@ -102,7 +110,7 @@
                                 @if($rental->return_date)
                                     {{ $rental->return_date->format('d F Y') }}
                                 @else
-                                    <span class="text-muted">Not returned yet</span>
+                                    <span class="text-white-50">Not returned yet</span>
                                 @endif
                             </div>
                         </div>
@@ -119,26 +127,43 @@
                         <i class="bi bi-receipt me-2"></i>PRICE INFORMATION
                     </h5>
                     <div class="price-breakdown">
+                        @php
+                            $currentFine = $rental->getCurrentFine();
+                            $grandTotal = $rental->getTotalAmount();
+                        @endphp
+                        
                         <div class="price-row">
-                            <span>Total Price</span>
+                            <span>Rental Price</span>
                             <span>Rp {{ number_format($rental->total_price, 0, ',', '.') }}</span>
                         </div>
+                        
                         <div class="price-row">
-                            <span>Fine</span>
+                            <span>Fine (Late Fee)</span>
                             <span>
-                                @if($rental->fine > 0)
+                                @if($currentFine > 0)
                                     <span class="text-danger fw-bold">
-                                        Rp {{ number_format($rental->fine, 0, ',', '.') }}
+                                        Rp {{ number_format($currentFine, 0, ',', '.') }}
                                     </span>
                                 @else
                                     <span class="text-success">No fine</span>
                                 @endif
                             </span>
                         </div>
+                        
+                        @if($rental->status === 'active' && $rental->isOverdue())
+                            <div class="price-row">
+                                <span class="text-warning" style="font-size: 0.85rem;">
+                                    <i class="bi bi-info-circle me-1"></i>
+                                    Fine increases Rp {{ number_format($rental->unit->price_per_day * 0.1, 0, ',', '.') }}/day
+                                </span>
+                                <span></span>
+                            </div>
+                        @endif
+                        
                         <div class="price-divider"></div>
                         <div class="price-row price-total">
                             <span>Grand Total</span>
-                            <span class="text-danger">Rp {{ number_format($rental->total_price + $rental->fine, 0, ',', '.') }}</span>
+                            <span class="text-danger">Rp {{ number_format($grandTotal, 0, ',', '.') }}</span>
                         </div>
                     </div>
                 </div>

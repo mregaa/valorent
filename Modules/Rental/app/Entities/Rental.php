@@ -54,11 +54,42 @@ class Rental extends Model
             return 0;
         }
 
-        $daysOverdue = Carbon::now()->diffInDays($this->due_date);
+        // ✅ Perbaikan: Hitung hari keterlambatan dengan benar
+        $daysOverdue = $this->due_date->diffInDays(Carbon::now());
+        
+        // Pastikan unit relationship sudah di-load
+        if (!$this->relationLoaded('unit')) {
+            $this->load('unit');
+        }
+        
         $finePerDay = $this->unit->price_per_day * 0.1; // 10% dari harga per hari
         
         return $daysOverdue * $finePerDay;
     }
+
+    /**
+     * Get current fine (from DB or calculated)
+     * Gunakan ini untuk menampilkan denda di view
+     */
+    public function getCurrentFine(): float
+    {
+        // Jika sudah returned, gunakan fine dari database
+        if ($this->status === 'returned') {
+            return (float) $this->fine;
+        }
+        
+        // Jika masih active, hitung real-time
+        return $this->calculateFine();
+    }
+
+    /**
+     * Get total amount to pay (price + fine)
+     */
+    public function getTotalAmount(): float
+    {
+        return $this->total_price + $this->getCurrentFine();
+    }
+
 
     /**
      * Relationship: Rental belongs to User
