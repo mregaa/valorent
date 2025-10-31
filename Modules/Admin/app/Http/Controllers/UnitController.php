@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Storage;
 use Modules\Catalog\App\Repositories\UnitRepositoryInterface;
 use Modules\Core\App\Repositories\CategoryRepositoryInterface;
 use Illuminate\Support\Str;
@@ -155,18 +156,18 @@ class UnitController extends Controller
 
     public function destroy(int $unit): RedirectResponse
     {
-        $unit = $this->unitRepository->findById($unit);
+        $unitObj = $this->unitRepository->findById($unit);
         
-        if (!$unit) {
+        if (!$unitObj) {
             abort(404, 'Unit not found');
         }
 
         // Delete image if exists
-        if ($unit->image && file_exists(public_path($unit->image))) {
-            unlink(public_path($unit->image));
+        if ($unitObj->image && Storage::disk('public')->exists('units/' . basename($unitObj->image))) {
+            Storage::disk('public')->delete('units/' . basename($unitObj->image));
         }
 
-        $this->unitRepository->delete($unit);
+        $this->unitRepository->delete($unitObj->id);
 
         return redirect()->route('admin.units.index')
             ->with('success', 'Unit deleted successfully.');

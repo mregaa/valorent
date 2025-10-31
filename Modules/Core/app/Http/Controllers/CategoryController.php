@@ -99,13 +99,13 @@ class CategoryController extends Controller
 
     public function destroy(int $category): RedirectResponse
     {
-        $category = $this->categoryRepository->findById($category);
+        $categoryObj = $this->categoryRepository->findById($category);
         
-        if (!$category) {
+        if (!$categoryObj) {
             abort(404, 'Category not found');
         }
 
-        $this->categoryRepository->delete($category);
+        $this->categoryRepository->delete($categoryObj->id);
 
         return redirect()->route('admin.categories.index')
             ->with('success', 'Category deleted successfully.');
