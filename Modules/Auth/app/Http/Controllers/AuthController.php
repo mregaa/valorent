@@ -33,11 +33,12 @@ class AuthController extends Controller
             'birth_date' => ['nullable', 'date', 'before:today'],
         ]);
 
-        // Create user
+        // Create user with email verified automatically
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
+            'email_verified_at' => now(), // Auto-verify email upon registration
             'role' => 'user',
         ]);
 

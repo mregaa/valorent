@@ -44,13 +44,13 @@
                                         @endif
                                     </div>
                                     <div class="ml-4">
-                                        <div class="text-sm font-medium text-gray-900">{{ $unit->name }}</div>
-                                        <div class="text-sm text-gray-500">{{ Str::limit($unit->description, 50) }}</div>
+                                        <div class="text-sm font-medium text-gray-200">{{ $unit->name }}</div>
+                                        <div class="text-sm text-gray-400">{{ Str::limit($unit->description, 50) }}</div>
                                     </div>
                                 </div>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $unit->code }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Rp {{ number_format($unit->price_per_day, 0, ',', '.') }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-200">{{ $unit->code }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-200">Rp {{ number_format($unit->price_per_day, 0, ',', '.') }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
                                     @if($unit->status === 'available') bg-green-100 text-green-800
@@ -66,7 +66,7 @@
                                             {{ $category->name }}
                                         </span>
                                     @empty
-                                        <span class="text-xs text-gray-500">No categories</span>
+                                        <span class="text-xs text-gray-400">No categories</span>
                                     @endforelse
                                 </div>
                             </td>
@@ -81,8 +81,8 @@
                             <td colspan="6" class="px-6 py-12 text-center">
                                 <div class="flex flex-col items-center justify-center">
                                     <i class="fas fa-cube text-gray-300 text-4xl mb-4"></i>
-                                    <h3 class="text-lg font-medium text-gray-900 mb-1">No units found</h3>
-                                    <p class="text-gray-500">No units have been created yet</p>
+                                    <h3 class="text-lg font-medium text-gray-200 mb-1">No units found</h3>
+                                    <p class="text-gray-400">No units have been created yet</p>
                                 </div>
                             </td>
                         </tr>

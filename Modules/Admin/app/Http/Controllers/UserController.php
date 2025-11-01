@@ -44,6 +44,7 @@ class UserController extends Controller
 
         $data = $request->all();
         $data['password'] = Hash::make($request->password);
+        $data['email_verified_at'] = now(); // Auto-verify email upon admin creation
 
         User::create($data);
 
