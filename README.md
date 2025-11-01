@@ -12,27 +12,24 @@ Valorent - Platform Sewa Akun Valorant
 
 ## List Fitur
 
-### User Side (Sudah Selesai)
-- ✅ Register & Login
-- ✅ Profile Management
-- ✅ Browse Catalog (Search & Filter)
-- ✅ Rent Unit (max 2 unit, max 5 hari)
-- ✅ View My Rentals
-- ✅ View Rental Details
+### User Side (Rega)
+- Register & Login
+- Profile Management
+- Browse Catalog (Search & Filter)
+- Rent Unit (max 2 unit, max 5 hari)
+- View My Rentals
+- View Rental Details
 
-### Admin Side (Dalam Pengerjaan - Kresna)
-- ⏳ CRUD Unit
-- ⏳ CRUD Category
-- ⏳ CRUD User/Anggota
-- ⏳ View All Rentals
-- ⏳ Process Return Unit
-- ⏳ Print Rental History
-
-## Database Schema
-[Screenshot ERD/Schema akan ditambahkan]
+### Admin Side (Kresna)
+- CRUD Unit
+- CRUD Category
+- CRUD User/Anggota
+- View All Rentals
+- Process Return Unit
+- Print Rental History
 
 ## Demo Video
-[Link video demo akan ditambahkan]
+https://drive.google.com/file/d/1zeMQ7PiQwPzASezPRHzCJUvw4SMD3KqQ/view?usp=sharing
 
 ## Tech Stack
 - Laravel 11
@@ -45,7 +42,7 @@ Valorent - Platform Sewa Akun Valorant
 
 1. Clone repository
 ```bash
-git clone [your-repo-url]
+git clone https://github.com/mregaa/valorent
 cd valorent
 ```
 
